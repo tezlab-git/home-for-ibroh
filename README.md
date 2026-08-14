@@ -1,4 +1,8 @@
-# Ibroh's Digital Home
+This site can’t be reached
+Check if there is a typo in ibroh.im.
+
+If spelling is correct, try running windows network Diagnostics.
+DNS_PROBE_FINISHED_NXDOMAIN# Ibroh's Digital Home
 
 Create a modern, elegant personal website for ibroh.im.
 
