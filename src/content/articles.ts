@@ -9,48 +9,49 @@ export type Article = {
 };
 
 /**
- * Content source for writing. Shaped like a CMS/database record so this array
- * can later be swapped for a fetch/loader without touching the UI components.
+ * Yozmalar uchun kontent manbasi. CMS/ma'lumotlar bazasi yozuvi shaklida
+ * tuzilgan — kelajakda UI komponentlariga tegmasdan loader/fetch bilan
+ * almashtirish mumkin.
  */
 export const articles: Article[] = [
   {
-    slug: "what-im-building-right-now",
-    title: "What I'm Building Right Now",
+    slug: "hozir-nima-quryapman",
+    title: "Hozir nima quryapman",
     excerpt:
-      "A short look inside the products, experiments, and half-finished ideas currently living on my desk.",
+      "Stolim ustida turgan mahsulotlar, tajribalar va yarim tugallangan gʻoyalarga qisqa nazar.",
     date: "2026-08-02",
-    displayDate: "Aug 2, 2026",
-    readingTime: "4 min read",
-    category: "Building",
+    displayDate: "2-avgust, 2026",
+    readingTime: "4 daqiqa oʻqish",
+    category: "Qurish",
   },
   {
-    slug: "why-i-like-building-small-products",
-    title: "Why I Like Building Small Products",
+    slug: "kichik-mahsulotlar",
+    title: "Nega kichik mahsulotlar qurishni yaxshi koʻraman",
     excerpt:
-      "Small products teach faster than big plans. Notes on shipping tiny things and letting them grow slowly.",
+      "Kichik mahsulotlar katta rejalardan tezroq oʻrgatadi. Kichik narsalarni chiqarish va ularni sekin oʻstirish haqida.",
     date: "2026-07-18",
-    displayDate: "Jul 18, 2026",
-    readingTime: "6 min read",
-    category: "Craft",
+    displayDate: "18-iyul, 2026",
+    readingTime: "6 daqiqa oʻqish",
+    category: "Hunar",
   },
   {
-    slug: "lessons-from-my-latest-project",
-    title: "Lessons From My Latest Project",
+    slug: "songgi-loyihadan-saboqlar",
+    title: "Soʻnggi loyihamdan olgan saboqlar",
     excerpt:
-      "What worked, what quietly failed, and the decisions I would make differently the next time around.",
+      "Nima ishladi, nima jimgina muvaffaqiyatsiz boʻldi va keyingi safar qanday qarorlarni boshqacha qabul qilardim.",
     date: "2026-06-29",
-    displayDate: "Jun 29, 2026",
-    readingTime: "7 min read",
-    category: "Reflection",
+    displayDate: "29-iyun, 2026",
+    readingTime: "7 daqiqa oʻqish",
+    category: "Mulohaza",
   },
   {
-    slug: "the-things-im-learning",
-    title: "The Things I'm Learning",
+    slug: "organayotgan-narsalarim",
+    title: "Oʻrganayotgan narsalarim",
     excerpt:
-      "On learning in public: AI, business, writing, and the habit of taking better notes about everything.",
+      "Ochiq oʻrganish haqida: AI, biznes, yozish va hamma narsa haqida yaxshiroq qaydlar olish odati.",
     date: "2026-06-10",
-    displayDate: "Jun 10, 2026",
-    readingTime: "5 min read",
-    category: "Learning",
+    displayDate: "10-iyun, 2026",
+    readingTime: "5 daqiqa oʻqish",
+    category: "Oʻrganish",
   },
 ];

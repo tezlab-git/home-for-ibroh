@@ -1,17 +1,17 @@
 export const site = {
   name: "ibroh.im",
   owner: "Ibrohimbek Gulomov",
-  tagline: "A personal space for ideas, projects, and experiments.",
-  location: "Based in Uzbekistan · Building things on the internet",
+  tagline: "G'oyalar, loyihalar va tajribalar uchun shaxsiy makon.",
+  location: "Oʻzbekistonda · Internetda narsalar quraman",
   email: "hello@ibroh.im",
 };
 
 export const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "About", to: "/about" },
-  { label: "Projects", to: "/projects" },
-  { label: "Writing", to: "/writing" },
-  { label: "Now", to: "/now" },
+  { label: "Bosh sahifa", to: "/" },
+  { label: "Men haqimda", to: "/about" },
+  { label: "Loyihalar", to: "/projects" },
+  { label: "Yozmalar", to: "/writing" },
+  { label: "Hozir", to: "/now" },
 ] as const;
 
 export const socialLinks = [
@@ -23,25 +23,25 @@ export const socialLinks = [
 ];
 
 export const currently = [
-  { label: "Building", value: "Digital products" },
-  { label: "Learning", value: "AI · Business · Technology" },
-  { label: "Reading", value: "Books & research" },
-  { label: "Exploring", value: "New ideas" },
+  { label: "Quryapman", value: "Raqamli mahsulotlar" },
+  { label: "Oʻrganyapman", value: "AI · Biznes · Texnologiya" },
+  { label: "Oʻqiyapman", value: "Kitoblar va tadqiqotlar" },
+  { label: "Izlanyapman", value: "Yangi gʻoyalar" },
 ];
 
 export const nowItems = [
   {
-    title: "Building",
-    body: "Working on new digital products and experiments.",
+    title: "Quryapman",
+    body: "Yangi raqamli mahsulotlar va tajribalar ustida ishlayapman.",
   },
   {
-    title: "Learning",
-    body: "Improving my skills in technology, business, AI, and communication.",
+    title: "Oʻrganyapman",
+    body: "Texnologiya, biznes, AI va kommunikatsiya boʻyicha bilimlarimni oshirayapman.",
   },
   {
-    title: "Exploring",
-    body: "New ideas around startups, education, AI, and personal development.",
+    title: "Izlanyapman",
+    body: "Startaplar, taʼlim, AI va shaxsiy rivojlanish atrofidagi yangi gʻoyalar.",
   },
 ];
 
-export const nowUpdatedAt = "August 2026";
+export const nowUpdatedAt = "2026-yil avgust";
