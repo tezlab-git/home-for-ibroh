@@ -1,6 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { articles as staticArticles } from "@/content/articles";
+
+const MDPreview = lazy(() => import("@uiw/react-md-editor").then((m) => ({ default: m.default.Markdown })));
 
 export const Route = createFileRoute("/writing/$slug")({
   loader: async ({ params }) => {
@@ -35,46 +38,6 @@ export const Route = createFileRoute("/writing/$slug")({
 function ArticlePage() {
   const { article } = Route.useLoaderData();
 
-  const paragraphs = (article.body as string)
-    .split("\n\n")
-    .filter(Boolean)
-    .map((block: string, i: number) => {
-      if (block.startsWith("**") && block.endsWith("**")) {
-        return (
-          <h2 key={i} className="mt-8 text-lg font-semibold text-foreground">
-            {block.replace(/\*\*/g, "")}
-          </h2>
-        );
-      }
-      if (block.startsWith("- ")) {
-        const items = block.split("\n").filter((l) => l.startsWith("- "));
-        return (
-          <ul key={i} className="mt-4 list-disc pl-5 space-y-1">
-            {items.map((item, j) => (
-              <li key={j} className="text-base leading-relaxed text-muted-foreground">
-                {item.replace(/^- /, "")}
-              </li>
-            ))}
-          </ul>
-        );
-      }
-      // Bold inline **text**
-      const parts = block.split(/(\*\*[^*]+\*\*)/g);
-      return (
-        <p key={i} className="mt-4 text-base leading-relaxed text-muted-foreground">
-          {parts.map((part, j) =>
-            part.startsWith("**") && part.endsWith("**") ? (
-              <strong key={j} className="font-semibold text-foreground">
-                {part.replace(/\*\*/g, "")}
-              </strong>
-            ) : (
-              part
-            )
-          )}
-        </p>
-      );
-    });
-
   return (
     <div className="shell py-20 sm:py-28">
       <Link
@@ -97,7 +60,13 @@ function ArticlePage() {
           </div>
         </header>
 
-        <div className="mt-10 border-t border-hairline pt-10">{paragraphs}</div>
+        <div className="mt-10 border-t border-hairline pt-10">
+          <Suspense fallback={<p className="text-sm text-muted-foreground">Yuklanmoqda...</p>}>
+            <div data-color-mode="light" className="prose prose-sm max-w-none">
+              <MDPreview source={article.body as string} />
+            </div>
+          </Suspense>
+        </div>
       </article>
     </div>
   );
