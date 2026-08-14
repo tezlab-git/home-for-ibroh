@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
 import { ProjectCard } from "@/components/site/ProjectCard";
-import { projects } from "@/content/projects";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 const title = "Loyihalar — ibroh.im";
 const description =
@@ -14,12 +15,45 @@ export const Route = createFileRoute("/projects")({
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
+      { rel: "canonical", href: "https://ibroh.im/projects" },
+      { property: "og:image", content: "https://ibroh.im/og-default.svg" },
     ],
   }),
   component: ProjectsPage,
 });
 
+type Project = {
+  slug: string;
+  name: string;
+  description?: string;
+  category?: string;
+  status?: string;
+  year?: string;
+  href?: string;
+};
+
 function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const { data, error } = await supabase
+          .from("projects")
+          .select("slug,name,description,category,status,year,href")
+          .eq("published", true)
+          .order("created_at", { ascending: false });
+        if (error) throw error;
+        if (mounted) setProjects((data as any) || []);
+      } catch (e) {
+        console.error("Failed to load projects", e);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <div className="shell py-20 sm:py-28">
       <Reveal>
