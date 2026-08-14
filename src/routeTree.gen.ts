@@ -15,9 +15,15 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as NowRouteImport } from './routes/now'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as WritingRouteImport } from './routes/writing'
+import { Route as WritingSlugRouteImport } from './routes/writing/$slug'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 
+const WritingSlugRoute = WritingSlugRouteImport.update({
+  id: '/writing/$slug',
+  path: '/writing/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/now': typeof NowRoute
   '/projects': typeof ProjectsRoute
   '/writing': typeof WritingRoute
+  '/writing/$slug': typeof WritingSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/login': typeof AdminLoginRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/now': typeof NowRoute
   '/projects': typeof ProjectsRoute
   '/writing': typeof WritingRoute
+  '/writing/$slug': typeof WritingSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/login': typeof AdminLoginRoute
 }
@@ -87,16 +95,17 @@ export interface FileRoutesById {
   '/now': typeof NowRoute
   '/projects': typeof ProjectsRoute
   '/writing': typeof WritingRoute
+  '/writing/$slug': typeof WritingSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/admin/' | '/admin/login'
+  fullPaths: '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/admin/' | '/admin/login'
+  to: '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
   id:
-    '__root__' | '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/admin/' | '/admin/login'
+    '__root__' | '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +115,7 @@ export interface RootRouteChildren {
   NowRoute: typeof NowRoute
   ProjectsRoute: typeof ProjectsRoute
   WritingRoute: typeof WritingRoute
+  WritingSlugRoute: typeof WritingSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminLoginRoute: typeof AdminLoginRoute
 }
@@ -154,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WritingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/writing/$slug': {
+      id: '/writing/$slug'
+      path: '/writing/$slug'
+      fullPath: '/writing/$slug'
+      preLoaderRoute: typeof WritingSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/admin/'
@@ -178,6 +195,7 @@ const rootRouteChildren: RootRouteChildren = {
   NowRoute: NowRoute,
   ProjectsRoute: ProjectsRoute,
   WritingRoute: WritingRoute,
+  WritingSlugRoute: WritingSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminLoginRoute: AdminLoginRoute,
 }

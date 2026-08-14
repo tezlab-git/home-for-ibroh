@@ -5,7 +5,8 @@ import type { Article } from "@/content/articles";
 export function ArticleCard({ article }: { article: Article }) {
   return (
     <Link
-      to="/writing"
+      to="/writing/$slug"
+      params={{ slug: article.slug }}
       aria-label={article.title}
       className="group flex flex-col gap-3 border-t border-hairline py-7 transition-colors sm:flex-row sm:items-baseline sm:gap-10"
     >
