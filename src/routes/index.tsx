@@ -9,9 +9,9 @@ import { projects } from "@/content/projects";
 import { articles } from "@/content/articles";
 import { currently, nowItems, nowUpdatedAt, site } from "@/content/site";
 
-const title = "ibroh.im — Quraman, oʻrganaman va ulashaman.";
+const title = "Ibrohimbek Gulomov — Quraman, oʻrganaman va ulashaman.";
 const description =
-  "Ibrohimbekning shaxsiy sayti: loyihalar, yozmalar, tajribalar va internetda narsalar qurish jarayonida oʻrganayotgan narsalarim.";
+  "Ibrohimbek Gulomov (Ibrohim) — Oʻzbekistonlik dasturchi va mahsulot yaratuvchi. Loyihalar, yozmalar, tajribalar va internetda narsalar qurish jarayonida oʻrganayotgan narsalarim.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

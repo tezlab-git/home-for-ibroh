@@ -87,6 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "The personal website of Ibrohimbek: projects, writing, and experiments.",
       },
       { name: "author", content: "Ibrohimbek Gulomov" },
+      { name: "keywords", content: "Ibrohimbek Gulomov, Ibrohim Gulomov, Ibrohim, ibroh.im, O'zbekiston, dasturchi, mahsulot yaratuvchi, web developer, Uzbekistan developer" },
       { property: "og:title", content: "ibroh.im — I build, learn, and share." },
       {
         property: "og:description",
