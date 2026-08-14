@@ -1,6 +1,20 @@
-import { site, socialLinks } from "@/content/site";
+import { useEffect, useState } from "react";
+import { site } from "@/content/site";
+import { supabase } from "@/lib/supabaseClient";
+
+type SocialLink = { id: string; label: string; href: string; sort_order: number };
 
 export function Footer() {
+  const [links, setLinks] = useState<SocialLink[]>([]);
+
+  useEffect(() => {
+    supabase
+      .from("social_links")
+      .select("*")
+      .order("sort_order")
+      .then(({ data }) => { if (data) setLinks(data); });
+  }, []);
+
   return (
     <footer className="border-t border-hairline">
       <div className="shell py-16 sm:py-20">
@@ -12,8 +26,8 @@ export function Footer() {
             {site.tagline}
           </p>
           <ul className="flex flex-wrap gap-x-6 gap-y-3">
-            {socialLinks.map((link) => (
-              <li key={link.label}>
+            {links.map((link) => (
+              <li key={link.id}>
                 <a
                   href={link.href}
                   target={link.href.startsWith("http") ? "_blank" : undefined}

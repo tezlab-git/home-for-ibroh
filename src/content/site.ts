@@ -15,10 +15,10 @@ export const navLinks = [
 ] as const;
 
 export const socialLinks = [
-  { label: "Instagram", href: "https://instagram.com/" },
-  { label: "Telegram", href: "https://t.me/" },
-  { label: "LinkedIn", href: "https://linkedin.com/" },
-  { label: "GitHub", href: "https://github.com/" },
+  { label: "Instagram", href: "https://instagram.com/USERNAME" },
+  { label: "Telegram", href: "https://t.me/USERNAME" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/USERNAME" },
+  { label: "GitHub", href: "https://github.com/USERNAME" },
   { label: "Email", href: "mailto:hello@ibroh.im" },
 ];
 
