@@ -22,10 +22,10 @@ export function PagePlaceholder({
         </p>
         <div className="mt-10 flex flex-wrap gap-3">
           <ActionLink to="/projects" variant="outline" size="sm">
-            See projects
+            Loyihalarni koʻrish
           </ActionLink>
           <ActionLink to="/writing" variant="outline" size="sm">
-            Read writing
+            Yozmalarni oʻqish
           </ActionLink>
         </div>
       </Reveal>

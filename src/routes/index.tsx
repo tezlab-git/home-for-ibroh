@@ -9,9 +9,9 @@ import { projects } from "@/content/projects";
 import { articles } from "@/content/articles";
 import { currently, nowItems, nowUpdatedAt, site } from "@/content/site";
 
-const title = "ibroh.im — I build, learn, and share.";
+const title = "ibroh.im — Quraman, oʻrganaman va ulashaman.";
 const description =
-  "The personal website of Ibrohimbek: projects, writing, experiments, and things I'm learning while building on the internet.";
+  "Ibrohimbekning shaxsiy sayti: loyihalar, yozmalar, tajribalar va internetda narsalar qurish jarayonida oʻrganayotgan narsalarim.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,19 +33,19 @@ function Index() {
         <Reveal>
           <p className="eyebrow">{site.owner}</p>
           <h1 className="mt-6 max-w-3xl text-4xl leading-[1.05] font-medium tracking-tightest text-foreground sm:text-6xl lg:text-7xl">
-            I build, learn, and share.
+            Quraman, oʻrganaman va ulashaman.
           </h1>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            A personal space for my projects, ideas, experiments, and things I'm learning
-            along the way.
+            Loyihalarim, gʻoyalarim, tajribalarim va yoʻl davomida oʻrganayotgan
+            narsalarim uchun shaxsiy makon.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <ActionLink to="/projects">
-              Explore my work
+              Ishlarimni koʻrish
               <ArrowRight aria-hidden="true" className="size-4" />
             </ActionLink>
             <ActionLink to="/writing" variant="outline">
-              Read my writing
+              Yozmalarimni oʻqish
             </ActionLink>
           </div>
           <p className="mt-12 text-xs tracking-wide text-muted-foreground">
@@ -55,7 +55,7 @@ function Index() {
       </section>
 
       {/* Currently strip */}
-      <section aria-label="Currently" className="border-y border-hairline bg-surface">
+      <section aria-label="Ayni damda" className="border-y border-hairline bg-surface">
         <ul className="shell grid grid-cols-2 divide-hairline lg:grid-cols-4 lg:divide-x">
           {currently.map((item, i) => (
             <Reveal
@@ -74,10 +74,10 @@ function Index() {
       {/* Selected Projects */}
       <section id="projects" className="shell py-20 sm:py-28">
         <SectionHeader
-          eyebrow="Work"
-          title="Selected Projects"
-          description="A few things I'm building, shipping, and experimenting with."
-          action={{ label: "View all projects →", to: "/projects" }}
+          eyebrow="Ishlar"
+          title="Tanlangan loyihalar"
+          description="Men qurayotgan, ishga tushirayotgan va sinab koʻrayotgan bir nechta narsa."
+          action={{ label: "Barcha loyihalar →", to: "/projects" }}
         />
         <div className="grid gap-5 sm:grid-cols-2">
           {projects.map((project, i) => (
@@ -92,27 +92,29 @@ function Index() {
       <section id="about" className="border-t border-hairline">
         <div className="shell grid gap-12 py-20 sm:py-28 lg:grid-cols-[1fr_20rem] lg:gap-20">
           <Reveal>
-            <p className="eyebrow">About</p>
+            <p className="eyebrow">Men haqimda</p>
             <h2 className="mt-4 text-2xl font-medium tracking-tightest text-foreground sm:text-3xl">
-              A little about me
+              Men haqimda qisqacha
             </h2>
             <div className="mt-6 max-w-xl space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
               <p>
-                This is my corner of the internet — a place where I document the things I
-                build, the things I learn, and the ideas I keep coming back to.
+                Bu — internetdagi mening burchagim. Men bu yerda qurayotgan narsalarimni,
+                oʻrganayotganlarimni va qayta-qayta qaytib keladigan gʻoyalarimni yozib
+                boraman.
               </p>
               <p>
-                I spend most of my time making digital products, running small
-                experiments, reading, and taking notes on technology, business, and
-                personal development. Some of it turns into products, some of it turns
-                into writing, and the rest lives here as a work in progress.
+                Vaqtimning koʻp qismini raqamli mahsulotlar yaratish, kichik tajribalar
+                oʻtkazish, kitob oʻqish va texnologiya, biznes hamda shaxsiy rivojlanish
+                haqida qaydlar olishga sarflayman. Ularning bir qismi mahsulotga, bir
+                qismi yozmalarga aylanadi, qolgani esa shu yerda davom etayotgan ish
+                sifatida yashaydi.
               </p>
             </div>
             <Link
               to="/about"
               className="link-underline mt-8 inline-block text-sm font-medium text-foreground"
             >
-              More about me →
+              Batafsil →
             </Link>
           </Reveal>
           <Reveal delay={90}>
@@ -120,7 +122,7 @@ function Index() {
               <div>
                 <p className="font-serif text-3xl text-foreground">IG</p>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Portrait coming soon
+                  Portret tez orada qoʻshiladi
                 </p>
               </div>
             </div>
@@ -132,10 +134,10 @@ function Index() {
       <section id="writing" className="border-t border-hairline">
         <div className="shell py-20 sm:py-28">
           <SectionHeader
-            eyebrow="Journal"
-            title="Latest Writing"
-            description="Notes, essays, and lessons from building things."
-            action={{ label: "Read all writing →", to: "/writing" }}
+            eyebrow="Kundalik"
+            title="Soʻnggi yozmalar"
+            description="Narsalar qurish jarayonidan qaydlar, esselar va saboqlar."
+            action={{ label: "Barcha yozmalar →", to: "/writing" }}
           />
           <div>
             {articles.map((article, i) => (
@@ -151,10 +153,10 @@ function Index() {
       <section id="now" className="border-t border-hairline bg-surface">
         <div className="shell py-20 sm:py-28">
           <SectionHeader
-            eyebrow="Right now"
-            title="Now"
-            description="What I'm currently working on, learning, reading, and exploring."
-            action={{ label: "Full now page →", to: "/now" }}
+            eyebrow="Ayni damda"
+            title="Hozir"
+            description="Hozir nima ustida ishlayotganim, nimalarni oʻrganayotganim, oʻqiyotganim va izlayotganim."
+            action={{ label: "Toʻliq sahifa →", to: "/now" }}
           />
           <div className="grid gap-5 sm:grid-cols-3">
             {nowItems.map((item, i) => (
@@ -169,7 +171,7 @@ function Index() {
             ))}
           </div>
           <p className="mt-8 text-xs text-muted-foreground">
-            Last updated · {nowUpdatedAt}
+            Oxirgi yangilanish · {nowUpdatedAt}
           </p>
         </div>
       </section>

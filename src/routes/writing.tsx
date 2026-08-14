@@ -3,9 +3,9 @@ import { Reveal } from "@/components/site/Reveal";
 import { ArticleCard } from "@/components/site/ArticleCard";
 import { articles } from "@/content/articles";
 
-const title = "Writing — ibroh.im";
+const title = "Yozmalar — ibroh.im";
 const description =
-  "Essays and notes on building small products, learning in public, AI, and personal development.";
+  "Kichik mahsulotlar qurish, ochiq oʻrganish, AI va shaxsiy rivojlanish haqida esselar va qaydlar.";
 
 export const Route = createFileRoute("/writing")({
   head: () => ({
@@ -23,13 +23,13 @@ function WritingPage() {
   return (
     <div className="shell py-20 sm:py-28">
       <Reveal>
-        <p className="eyebrow">Journal</p>
+        <p className="eyebrow">Kundalik</p>
         <h1 className="mt-4 text-3xl font-medium tracking-tightest text-foreground sm:text-5xl">
-          Writing
+          Yozmalar
         </h1>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          Notes, essays, and lessons from building things. Individual articles are coming
-          soon.
+          Narsalar qurish jarayonidan qaydlar, esselar va saboqlar. Alohida maqolalar tez
+          orada.
         </p>
       </Reveal>
       <div className="mt-14">

@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
 import { nowItems, nowUpdatedAt } from "@/content/site";
 
-const title = "Now — ibroh.im";
+const title = "Hozir — ibroh.im";
 const description =
-  "What Ibrohimbek is building, learning, reading, and exploring right now.";
+  "Ibrohimbek hozir nima qurayotgani, nimalarni oʻrganayotgani, oʻqiyotgani va izlayotgani.";
 
 export const Route = createFileRoute("/now")({
   head: () => ({
@@ -22,12 +22,12 @@ function NowPage() {
   return (
     <div className="shell py-20 sm:py-28">
       <Reveal>
-        <p className="eyebrow">Right now</p>
+        <p className="eyebrow">Ayni damda</p>
         <h1 className="mt-4 text-3xl font-medium tracking-tightest text-foreground sm:text-5xl">
-          Now
+          Hozir
         </h1>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          A snapshot of my current focus, updated every so often.
+          Hozirgi diqqat markazimning qisqa tasviri, vaqti-vaqti bilan yangilanadi.
         </p>
       </Reveal>
       <div className="mt-14 divide-y divide-hairline border-y border-hairline">
@@ -44,7 +44,9 @@ function NowPage() {
           </Reveal>
         ))}
       </div>
-      <p className="mt-8 text-xs text-muted-foreground">Last updated · {nowUpdatedAt}</p>
+      <p className="mt-8 text-xs text-muted-foreground">
+        Oxirgi yangilanish · {nowUpdatedAt}
+      </p>
     </div>
   );
 }

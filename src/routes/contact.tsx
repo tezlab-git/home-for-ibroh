@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
 import { site, socialLinks } from "@/content/site";
 
-const title = "Contact — ibroh.im";
+const title = "Aloqa — ibroh.im";
 const description =
-  "Get in touch with Ibrohimbek about projects, ideas, collaborations, or just to say hello.";
+  "Loyihalar, gʻoyalar, hamkorlik yoki shunchaki salomlashish uchun Ibrohimbek bilan bogʻlaning.";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -22,13 +22,13 @@ function ContactPage() {
   return (
     <div className="shell py-20 sm:py-28">
       <Reveal>
-        <p className="eyebrow">Contact</p>
+        <p className="eyebrow">Aloqa</p>
         <h1 className="mt-4 text-3xl font-medium tracking-tightest text-foreground sm:text-5xl">
-          Say hello
+          Salom aytish
         </h1>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          I'm always open to conversations about products, ideas, and experiments. The
-          fastest way to reach me is email.
+          Mahsulotlar, gʻoyalar va tajribalar haqida suhbatlashishga har doim tayyorman.
+          Menga eng tez yoʻl — elektron pochta.
         </p>
         <a
           href={`mailto:${site.email}`}
@@ -38,7 +38,7 @@ function ContactPage() {
         </a>
       </Reveal>
       <Reveal delay={80} className="mt-14 border-t border-hairline pt-8">
-        <p className="eyebrow">Elsewhere</p>
+        <p className="eyebrow">Boshqa joylarda</p>
         <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
           {socialLinks.map((link) => (
             <li key={link.label}>
