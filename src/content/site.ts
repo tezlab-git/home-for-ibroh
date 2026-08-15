@@ -3,7 +3,7 @@ export const site = {
   owner: "Ibrohimbek Gulomov",
   tagline: "G'oyalar, loyihalar va tajribalar uchun shaxsiy makon.",
   location: "Oʻzbekistonda · Internetda narsalar quraman",
-  email: "hello@ibroh.im",
+  email: "me@ibroh.im",
 };
 
 export const navLinks = [
@@ -19,7 +19,7 @@ export const socialLinks = [
   { label: "Telegram", href: "https://t.me/USERNAME" },
   { label: "LinkedIn", href: "https://linkedin.com/in/USERNAME" },
   { label: "GitHub", href: "https://github.com/USERNAME" },
-  { label: "Email", href: "mailto:hello@ibroh.im" },
+  { label: "Email", href: "mailto:me@ibroh.im" },
 ];
 
 export const currently = [

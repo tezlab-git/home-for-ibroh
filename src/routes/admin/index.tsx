@@ -172,7 +172,7 @@ function AdminDashboard() {
             onDelete={(id) => deleteRow("articles", id)} />
         ) : tab === "social" ? (
           <SocialTable links={socialLinks}
-            onEdit={setEditingLink}
+            onSave={saveLink}
             onDelete={(id) => deleteRow("social_links", id)} />
         ) : (
           <SettingsForm settings={settings} onSave={saveSettings} />
@@ -229,20 +229,64 @@ function ArticlesTable({ articles, onEdit, onToggle, onDelete }: {
   );
 }
 
-function SocialTable({ links, onEdit, onDelete }: {
-  links: SocialLink[]; onEdit: (l: SocialLink) => void; onDelete: (id: string) => void;
+function SocialTable({ links, onSave, onDelete }: {
+  links: SocialLink[];
+  onSave: (l: Partial<SocialLink>) => void;
+  onDelete: (id: string) => void;
 }) {
+  const [editing, setEditing] = useState<Record<string, SocialLink>>({});
+
+  function startEdit(l: SocialLink) {
+    setEditing((prev) => ({ ...prev, [l.id]: { ...l } }));
+  }
+  function set(id: string, k: keyof SocialLink, v: string | number) {
+    setEditing((prev) => ({ ...prev, [id]: { ...prev[id], [k]: v } }));
+  }
+  async function save(id: string) {
+    await onSave(editing[id]);
+    setEditing((prev) => { const n = { ...prev }; delete n[id]; return n; });
+  }
+  function cancel(id: string) {
+    setEditing((prev) => { const n = { ...prev }; delete n[id]; return n; });
+  }
+
   if (!links.length) return <Empty text="Ijtimoiy tarmoq linklari yo'q." />;
   return (
     <Table headers={["Label", "Havola", "Tartib", "Amallar"]}>
-      {links.map((l) => (
-        <tr key={l.id} className="hover:bg-surface/50">
-          <td className="px-4 py-3 font-medium text-foreground">{l.label}</td>
-          <td className="px-4 py-3 text-muted-foreground text-xs truncate max-w-xs">{l.href}</td>
-          <td className="px-4 py-3 text-muted-foreground">{l.sort_order}</td>
-          <td className="px-4 py-3"><Actions onEdit={() => onEdit(l)} onDelete={() => onDelete(l.id)} /></td>
-        </tr>
-      ))}
+      {links.map((l) => {
+        const row = editing[l.id];
+        return row ? (
+          <tr key={l.id} className="bg-surface/50">
+            <td className="px-4 py-2">
+              <input className={inputCls} value={row.label} onChange={(e) => set(l.id, "label", e.target.value)} />
+            </td>
+            <td className="px-4 py-2">
+              <input className={inputCls} value={row.href} onChange={(e) => set(l.id, "href", e.target.value)} />
+            </td>
+            <td className="px-4 py-2">
+              <input className={inputCls} type="number" value={row.sort_order} onChange={(e) => set(l.id, "sort_order", Number(e.target.value))} style={{ width: 60 }} />
+            </td>
+            <td className="px-4 py-2">
+              <div className="flex gap-3">
+                <button onClick={() => save(l.id)} className="text-xs text-green-600 hover:text-green-800">Saqlash</button>
+                <button onClick={() => cancel(l.id)} className="text-xs text-muted-foreground hover:text-foreground">Bekor</button>
+              </div>
+            </td>
+          </tr>
+        ) : (
+          <tr key={l.id} className="hover:bg-surface/50 cursor-pointer" onClick={() => startEdit(l)}>
+            <td className="px-4 py-3 font-medium text-foreground">{l.label}</td>
+            <td className="px-4 py-3 text-muted-foreground text-xs truncate max-w-xs">{l.href}</td>
+            <td className="px-4 py-3 text-muted-foreground">{l.sort_order}</td>
+            <td className="px-4 py-3">
+              <div className="flex gap-3">
+                <button onClick={(e) => { e.stopPropagation(); startEdit(l); }} className="text-xs text-blue-500 hover:text-blue-700">Tahrirlash</button>
+                <button onClick={(e) => { e.stopPropagation(); onDelete(l.id); }} className="text-xs text-red-500 hover:text-red-700">O'chirish</button>
+              </div>
+            </td>
+          </tr>
+        );
+      })}
     </Table>
   );
 }
