@@ -64,10 +64,10 @@ function About() {
           <p>
             Bog'lanish uchun:{" "}
             <a
-              href="mailto:hello@ibroh.im"
+              href="mailto:me@ibroh.im"
               className="text-foreground underline underline-offset-4"
             >
-              hello@ibroh.im
+              me@ibroh.im
             </a>
           </p>
         </div>

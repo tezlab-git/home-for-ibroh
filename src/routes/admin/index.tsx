@@ -93,26 +93,34 @@ function AdminDashboard() {
   }
 
   async function saveProject(data: Partial<Project>) {
-    if (data.id) await supabase.from("projects").update(data).eq("id", data.id);
-    else await supabase.from("projects").insert(data);
+    const { error } = data.id
+      ? await supabase.from("projects").update(data).eq("id", data.id)
+      : await supabase.from("projects").insert(data);
+    if (error) { alert("Xato: " + error.message); return; }
     setEditingProject(null); load();
   }
 
   async function saveArticle(data: Partial<Article>) {
-    if (data.id) await supabase.from("articles").update(data).eq("id", data.id);
-    else await supabase.from("articles").insert(data);
+    const { error } = data.id
+      ? await supabase.from("articles").update(data).eq("id", data.id)
+      : await supabase.from("articles").insert(data);
+    if (error) { alert("Xato: " + error.message); return; }
     setEditingArticle(null); load();
   }
 
   async function saveLink(data: Partial<SocialLink>) {
-    if (data.id) await supabase.from("social_links").update(data).eq("id", data.id);
-    else await supabase.from("social_links").insert(data);
+    const { error } = data.id
+      ? await supabase.from("social_links").update(data).eq("id", data.id)
+      : await supabase.from("social_links").insert(data);
+    if (error) { alert("Xato: " + error.message); return; }
     setEditingLink(null); load();
   }
 
   async function saveSettings(data: SiteSettings) {
-    if (data.id) await supabase.from("site_settings").update(data).eq("id", data.id);
-    else await supabase.from("site_settings").insert(data);
+    const { error } = data.id
+      ? await supabase.from("site_settings").update(data).eq("id", data.id)
+      : await supabase.from("site_settings").insert(data);
+    if (error) { alert("Xato: " + error.message); return; }
     load();
   }
 
