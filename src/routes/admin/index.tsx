@@ -15,8 +15,8 @@ type Project = {
   category: string; status: string; year: string; href: string; published: boolean;
 };
 type Article = {
-  id: string; slug: string; title: string; excerpt: string; body: string;
-  date: string; display_date: string; reading_time: string; category: string; published: boolean;
+  id: string; slug: string; title: string; excerpt: string; content: string;
+  date: string; reading_time: string; category: string; published: boolean;
 };
 type SocialLink = { id: string; label: string; href: string; sort_order: number };
 type SiteSettings = {
@@ -31,8 +31,8 @@ const emptyProject: Omit<Project, "id"> = {
   year: String(new Date().getFullYear()), href: "", published: false,
 };
 const emptyArticle: Omit<Article, "id"> = {
-  slug: "", title: "", excerpt: "", body: "", date: new Date().toISOString().slice(0, 10),
-  display_date: "", reading_time: "", category: "", published: false,
+  slug: "", title: "", excerpt: "", content: "", date: new Date().toISOString().slice(0, 10),
+  reading_time: "", category: "", published: false,
 };
 const emptyLink: Omit<SocialLink, "id"> = { label: "", href: "", sort_order: 0 };
 
@@ -101,9 +101,10 @@ function AdminDashboard() {
   }
 
   async function saveArticle(data: Partial<Article>) {
+    const payload = { ...data, reading_time: data.reading_time ? Number(data.reading_time) : null };
     const { error } = data.id
-      ? await supabase.from("articles").update(data).eq("id", data.id)
-      : await supabase.from("articles").insert(data);
+      ? await supabase.from("articles").update(payload).eq("id", data.id)
+      : await supabase.from("articles").insert(payload);
     if (error) { alert("Xato: " + error.message); return; }
     setEditingArticle(null); load();
   }
@@ -368,20 +369,17 @@ function ArticleModal({ data, onSave, onClose }: { data: Partial<Article>; onSav
       <Field label="Slug"><input className={inputCls} value={form.slug ?? ""} onChange={(e) => set("slug", e.target.value)} /></Field>
       <Field label="Qisqa tavsif"><textarea className={inputCls} rows={2} value={form.excerpt ?? ""} onChange={(e) => set("excerpt", e.target.value)} /></Field>
       <Field label="Matn (Markdown)">
-        <Suspense fallback={<textarea className={inputCls} rows={12} value={form.body ?? ""} onChange={(e) => set("body", e.target.value)} />}>
+        <Suspense fallback={<textarea className={inputCls} rows={12} value={form.content ?? ""} onChange={(e) => set("content", e.target.value)} />}>
           <div data-color-mode="light">
-            <MDEditor value={form.body ?? ""} onChange={(v) => set("body", v ?? "")} height={360} />
+            <MDEditor value={form.content ?? ""} onChange={(v) => set("content", v ?? "")} height={360} />
           </div>
         </Suspense>
       </Field>
       <div className="grid grid-cols-2 gap-4">
         <Field label="Sana (YYYY-MM-DD)"><input className={inputCls} value={form.date ?? ""} onChange={(e) => set("date", e.target.value)} /></Field>
-        <Field label="Ko'rsatiladigan sana"><input className={inputCls} value={form.display_date ?? ""} onChange={(e) => set("display_date", e.target.value)} /></Field>
+        <Field label="O'qish vaqti (daqiqa)"><input className={inputCls} type="number" value={form.reading_time ?? ""} onChange={(e) => set("reading_time", e.target.value)} /></Field>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="O'qish vaqti"><input className={inputCls} value={form.reading_time ?? ""} onChange={(e) => set("reading_time", e.target.value)} /></Field>
-        <Field label="Kategoriya"><input className={inputCls} value={form.category ?? ""} onChange={(e) => set("category", e.target.value)} /></Field>
-      </div>
+      <Field label="Kategoriya"><input className={inputCls} value={form.category ?? ""} onChange={(e) => set("category", e.target.value)} /></Field>
       <Checkbox label="Nashr qilish" checked={form.published ?? false} onChange={(v) => set("published", v)} />
     </Modal>
   );

@@ -54,16 +54,15 @@ function ArticlePage() {
             {article.title}
           </h1>
           <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
-            <time dateTime={article.date}>{article.display_date ?? article.displayDate}</time>
-            <span>·</span>
-            <span>{article.reading_time ?? article.readingTime}</span>
+            <time dateTime={article.date}>{article.date}</time>
+            {article.reading_time && <><span>·</span><span>{article.reading_time} daqiqa</span></>}
           </div>
         </header>
 
         <div className="mt-10 border-t border-hairline pt-10">
           <Suspense fallback={<p className="text-sm text-muted-foreground">Yuklanmoqda...</p>}>
             <div data-color-mode="light" className="prose prose-sm max-w-none">
-              <MDPreview source={article.body as string} />
+              <MDPreview source={article.content as string} />
             </div>
           </Suspense>
         </div>
