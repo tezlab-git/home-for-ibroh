@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0e0a04; }
+.wrap { position: relative; display: inline-block; max-width: 100%; }
+img { display: block; width: 100%; }
+#info {
+  position: fixed; top: 10px; left: 10px;
+  background: rgba(0,0,0,0.85); color: #fff;
+  padding: 8px 12px; border-radius: 8px;
+  font: 13px monospace; z-index: 100;
+  pointer-events: none;
+}
+.dot {
+  position: absolute; width: 6px; height: 6px;
+  background: red; border-radius: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+<div id="info">Move mouse over image</div>
+<div class="wrap" id="wrap">
+  <img src="/bookshelf.png" id="img" draggable="false">
+</div>
+<script>
+const wrap = document.getElementById('wrap');
+const info = document.getElementById('info');
+let dot = null;
+wrap.addEventListener('mousemove', e => {
+  const r = wrap.getBoundingClientRect();
+  const x = ((e.clientX - r.left) / r.width * 100).toFixed(2);
+  const y = ((e.clientY - r.top) / r.height * 100).toFixed(2);
+  info.textContent = `x: ${x}%  y: ${y}%`;
+  if (!dot) { dot = document.createElement('div'); dot.className='dot'; wrap.appendChild(dot); }
+  dot.style.left = x + '%';
+  dot.style.top = y + '%';
+});
+wrap.addEventListener('click', e => {
+  const r = wrap.getBoundingClientRect();
+  const x = ((e.clientX - r.left) / r.width * 100).toFixed(2);
+  const y = ((e.clientY - r.top) / r.height * 100).toFixed(2);
+  console.log(`x:${x}, y:${y}`);
+  const m = document.createElement('div');
+  m.style.cssText = `position:absolute;left:${x}%;top:${y}%;width:4px;height:4px;background:lime;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;`;
+  wrap.appendChild(m);
+});
+</script>
+</body>
+</html>

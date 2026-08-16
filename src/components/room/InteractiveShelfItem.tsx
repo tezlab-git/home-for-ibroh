@@ -1,21 +1,21 @@
 import { useState, useRef, useCallback } from "react";
 import type { ShelfItem } from "./shelfTypes";
 import { getHoverTransform } from "./shelfTypes";
-import { DEBUG_HOTSPOTS } from "./shelfData";
 
 type State = "idle" | "hover" | "pressed";
 
 type Props = {
   item: ShelfItem;
   onSelect: (item: ShelfItem, originRect: DOMRect) => void;
+  isSelected?: boolean;
 };
 
-export function InteractiveShelfItem({ item, onSelect }: Props) {
+export function InteractiveShelfItem({ item, onSelect, isSelected }: Props) {
   const [state, setState] = useState<State>("idle");
   const btnRef = useRef<HTMLButtonElement>(null);
 
   const enter = useCallback(() => setState("hover"), []);
-  const leave = useCallback(() => setState("idle"), []);
+  const leave = useCallback(() => setState(isSelected ? "hover" : "idle"), [isSelected]);
   const down = useCallback(() => setState("pressed"), []);
   const up = useCallback(() => setState("hover"), []);
 
@@ -35,33 +35,21 @@ export function InteractiveShelfItem({ item, onSelect }: Props) {
     [item, onSelect],
   );
 
-  const isActive = state !== "idle";
-  const transform = getHoverTransform(item.type, state);
+  const effectiveState = isSelected ? "hover" : state;
+  const isActive = effectiveState !== "idle";
+  const transform = getHoverTransform(item.type, effectiveState);
 
   const shadow =
-    state === "hover"
-      ? "0 8px 22px rgba(0,0,0,0.55)"
-      : state === "pressed"
-        ? "0 3px 10px rgba(0,0,0,0.4)"
+    effectiveState === "hover"
+      ? "0 6px 18px rgba(0,0,0,0.5)"
+      : effectiveState === "pressed"
+        ? "0 2px 8px rgba(0,0,0,0.4)"
         : "none";
 
   const brightness =
-    state === "hover" ? 1.14 : state === "pressed" ? 1.06 : 1;
-
-  // Debug: show red overlay
-  const debugBg = DEBUG_HOTSPOTS
-    ? item.type === "globe"
-      ? "rgba(0,100,255,0.35)"
-      : item.type === "topic-book"
-        ? "rgba(255,150,0,0.3)"
-        : item.type === "notebook"
-          ? "rgba(0,200,100,0.3)"
-          : item.type === "camera"
-            ? "rgba(200,0,200,0.3)"
-            : item.type === "plant"
-              ? "rgba(0,200,0,0.3)"
-              : "rgba(255,0,0,0.25)"
-    : "transparent";
+    effectiveState === "hover" ? 1.14
+    : effectiveState === "pressed" ? 1.06
+    : 1;
 
   return (
     <button
@@ -73,7 +61,7 @@ export function InteractiveShelfItem({ item, onSelect }: Props) {
       onMouseDown={down}
       onMouseUp={up}
       onFocus={enter}
-      onBlur={leave}
+      onBlur={() => setState("idle")}
       onKeyDown={handleKey}
       data-item-id={item.id}
       data-item-type={item.type}
@@ -84,8 +72,8 @@ export function InteractiveShelfItem({ item, onSelect }: Props) {
         width: `${item.width}%`,
         height: `${item.height}%`,
         cursor: "pointer",
-        background: debugBg,
-        border: DEBUG_HOTSPOTS ? "1px solid rgba(255,255,255,0.4)" : "none",
+        background: "transparent",
+        border: "none",
         padding: 0,
         zIndex: isActive ? 10 : 1,
         outline: "none",
@@ -95,13 +83,9 @@ export function InteractiveShelfItem({ item, onSelect }: Props) {
         transition:
           "transform 240ms cubic-bezier(0.34,1.4,0.64,1), filter 180ms ease, box-shadow 200ms ease",
         borderRadius: item.type === "globe" ? "50%" : "2px",
-        // Focus ring
-        ...(state === "hover" && !DEBUG_HOTSPOTS
-          ? { outline: "none" }
-          : {}),
       }}
     >
-      {/* Hover label */}
+      {/* Hover label — only show when active */}
       <span
         aria-hidden="true"
         style={{
@@ -113,7 +97,7 @@ export function InteractiveShelfItem({ item, onSelect }: Props) {
           transition: "opacity 160ms ease, transform 160ms ease",
           pointerEvents: "none",
           whiteSpace: "nowrap",
-          background: "rgba(8,5,2,0.88)",
+          background: "rgba(8,5,2,0.9)",
           backdropFilter: "blur(10px)",
           color: "#f0ebe0",
           fontSize: "11px",
@@ -131,34 +115,11 @@ export function InteractiveShelfItem({ item, onSelect }: Props) {
       >
         {item.title}
         {item.subtitle && (
-          <span style={{ opacity: 0.55, marginLeft: 4, fontSize: "10px" }}>
+          <span style={{ opacity: 0.5, marginLeft: 5, fontSize: "10px" }}>
             {item.subtitle}
           </span>
         )}
       </span>
-
-      {/* Debug label */}
-      {DEBUG_HOTSPOTS && (
-        <span
-          style={{
-            position: "absolute",
-            top: "2px",
-            left: "2px",
-            fontSize: "8px",
-            color: "white",
-            background: "rgba(0,0,0,0.6)",
-            padding: "1px 3px",
-            borderRadius: "3px",
-            pointerEvents: "none",
-            lineHeight: 1.2,
-            maxWidth: "90%",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {item.id}
-        </span>
-      )}
     </button>
   );
 }

@@ -1,26 +1,37 @@
 import type { ShelfItem } from "./shelfTypes";
 
-// ── DEBUG ─────────────────────────────────────────────────────────────────────
-// Set to true to see red hotspot overlays for alignment
-export const DEBUG_HOTSPOTS = true;
+export const DEBUG_HOTSPOTS = false;
 
-// ── Image dimensions: 1536 × 1024 (ratio 3:2) ────────────────────────────────
+// Image: 1536x1024 (3:2 ratio)
+// Coordinates: % of rendered container
 //
-// Coordinate system: % of rendered container width/height
-// x = left edge %, y = top edge %, width = %, height = %
+// SHELF STRUCTURE (from pixel brightness analysis):
+//   Top shelf books:    y = 4% – 41%
+//   Shelf board 1:      y = 41% – 44%
+//   Middle shelf books: y = 44% – 64%
+//   Shelf board 2:      y = 64% – 68%
+//   Bottom shelf books: y = 68% – 82%
+//   Floor/base:         y = 82%+
 //
-// SHELF ROWS (approximate — adjust after visual check):
-//   Top shelf:    y ≈ 5–35%
-//   Middle shelf: y ≈ 40–68%
-//   Bottom shelf: y ≈ 70–92%
-//
-// NOTE: These are PLACEHOLDER coordinates.
-// After deploy, enable DEBUG_HOTSPOTS=true, open /room,
-// screenshot the red boxes, and adjust x/y/width/height to match real objects.
+// LEFT WALL: x = 0–7% (bright wall, no books)
+// RIGHT SIDE: x = 55%+ (globe, decorative objects)
 
 export const SHELF_ITEMS: ShelfItem[] = [
 
-  // ── TOP SHELF — left to right ─────────────────────────────────────────────
+  // ══════════════════════════════════════════════
+  // TOP SHELF  (y: 4 → 41)
+  // ══════════════════════════════════════════════
+  // From brightness analysis at y=20%:
+  // x=7-11: dark book (brown spine)
+  // x=11-17: medium book group
+  // x=17-19: gap
+  // x=19-25: wide bright book
+  // x=25-29: book
+  // x=29-34: book
+  // x=34-38: book
+  // x=38-43: book
+  // x=43-48: book
+  // x=48-55: book group
 
   {
     id: "topic-arabic",
@@ -28,7 +39,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Arabic",
     subtitle: "Til o'rganish",
     interaction: "open-topic",
-    x: 2.5, y: 5, width: 4.0, height: 30,
+    x: 7.0, y: 4, width: 4.0, height: 37,
   },
   {
     id: "topic-english",
@@ -36,7 +47,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "English",
     subtitle: "Til o'rganish",
     interaction: "open-topic",
-    x: 6.8, y: 5, width: 3.8, height: 30,
+    x: 11.0, y: 4, width: 3.0, height: 37,
   },
   {
     id: "topic-ai",
@@ -44,7 +55,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "AI",
     subtitle: "Sun'iy intellekt",
     interaction: "open-topic",
-    x: 10.8, y: 5, width: 3.5, height: 30,
+    x: 14.0, y: 4, width: 3.0, height: 37,
   },
   {
     id: "topic-design",
@@ -52,7 +63,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Design",
     subtitle: "Dizayn",
     interaction: "open-topic",
-    x: 14.5, y: 5, width: 4.0, height: 30,
+    x: 19.0, y: 4, width: 3.5, height: 37,
   },
   {
     id: "topic-business",
@@ -60,7 +71,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Business",
     subtitle: "Biznes",
     interaction: "open-topic",
-    x: 18.7, y: 5, width: 4.2, height: 30,
+    x: 22.5, y: 4, width: 3.5, height: 37,
   },
   {
     id: "topic-psychology",
@@ -68,7 +79,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Psychology",
     subtitle: "Psixologiya",
     interaction: "open-topic",
-    x: 23.1, y: 5, width: 4.5, height: 30,
+    x: 26.0, y: 4, width: 3.5, height: 37,
   },
   {
     id: "topic-selfdev",
@@ -76,7 +87,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Self Dev",
     subtitle: "Shaxsiy rivojlanish",
     interaction: "open-topic",
-    x: 27.8, y: 5, width: 4.0, height: 30,
+    x: 29.5, y: 4, width: 4.0, height: 37,
   },
   {
     id: "topic-tech",
@@ -84,7 +95,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Technology",
     subtitle: "Texnologiya",
     interaction: "open-topic",
-    x: 32.0, y: 5, width: 4.2, height: 30,
+    x: 33.5, y: 4, width: 4.0, height: 37,
   },
   {
     id: "topic-startups",
@@ -92,7 +103,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Startups",
     subtitle: "Startaplar",
     interaction: "open-topic",
-    x: 36.4, y: 5, width: 4.0, height: 30,
+    x: 37.5, y: 4, width: 4.0, height: 37,
   },
   {
     id: "book-atomic",
@@ -100,7 +111,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Atomic Habits",
     author: "James Clear",
     interaction: "open-book",
-    x: 40.6, y: 5, width: 4.2, height: 30,
+    x: 41.5, y: 4, width: 3.5, height: 37,
   },
   {
     id: "book-deepwork",
@@ -108,7 +119,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Deep Work",
     author: "Cal Newport",
     interaction: "open-book",
-    x: 45.0, y: 5, width: 3.8, height: 30,
+    x: 45.0, y: 4, width: 3.5, height: 37,
   },
   {
     id: "book-zerotone",
@@ -116,21 +127,20 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Zero to One",
     author: "Peter Thiel",
     interaction: "open-book",
-    x: 49.0, y: 5, width: 4.0, height: 30,
+    x: 48.5, y: 4, width: 4.0, height: 37,
   },
 
-  // ── GLOBE ─────────────────────────────────────────────────────────────────
-  // Adjust these coordinates after visual check!
-  {
-    id: "globe",
-    type: "globe",
-    title: "Dunyo",
-    subtitle: "Sayohat va madaniyatlar",
-    interaction: "open-map",
-    x: 55.0, y: 8, width: 8.0, height: 28,
-  },
-
-  // ── MIDDLE SHELF ──────────────────────────────────────────────────────────
+  // ══════════════════════════════════════════════
+  // MIDDLE SHELF  (y: 44 → 64)
+  // ══════════════════════════════════════════════
+  // From brightness analysis at y=55%:
+  // x=1-8: book (bright)
+  // x=8-11: gap
+  // x=11-18: book
+  // x=18-27: book group
+  // x=27-37: dark area
+  // x=40-47: book group
+  // x=55+: right side
 
   {
     id: "book-sapiens",
@@ -138,7 +148,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Sapiens",
     author: "Yuval Noah Harari",
     interaction: "open-book",
-    x: 2.5, y: 40, width: 4.2, height: 26,
+    x: 1.0, y: 44, width: 4.5, height: 20,
   },
   {
     id: "book-leanstartup",
@@ -146,7 +156,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "The Lean Startup",
     author: "Eric Ries",
     interaction: "open-book",
-    x: 6.9, y: 40, width: 4.5, height: 26,
+    x: 5.5, y: 44, width: 3.5, height: 20,
   },
   {
     id: "book-rework",
@@ -154,7 +164,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Rework",
     author: "Jason Fried",
     interaction: "open-book",
-    x: 11.6, y: 40, width: 3.8, height: 26,
+    x: 9.0, y: 44, width: 3.5, height: 20,
   },
   {
     id: "book-momtest",
@@ -162,7 +172,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "The Mom Test",
     author: "Rob Fitzpatrick",
     interaction: "open-book",
-    x: 15.6, y: 40, width: 4.0, height: 26,
+    x: 12.5, y: 44, width: 3.5, height: 20,
   },
   {
     id: "book-hooked",
@@ -170,7 +180,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Hooked",
     author: "Nir Eyal",
     interaction: "open-book",
-    x: 19.8, y: 40, width: 3.8, height: 26,
+    x: 16.0, y: 44, width: 3.0, height: 20,
   },
   {
     id: "book-essentialism",
@@ -178,7 +188,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Essentialism",
     author: "Greg McKeown",
     interaction: "open-book",
-    x: 23.8, y: 40, width: 4.2, height: 26,
+    x: 19.0, y: 44, width: 3.5, height: 20,
   },
   {
     id: "book-meditations",
@@ -186,7 +196,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Meditations",
     author: "Marcus Aurelius",
     interaction: "open-book",
-    x: 28.2, y: 40, width: 3.8, height: 26,
+    x: 22.5, y: 44, width: 3.5, height: 20,
   },
   {
     id: "book-warart",
@@ -194,36 +204,40 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "The War of Art",
     author: "Steven Pressfield",
     interaction: "open-book",
-    x: 32.2, y: 40, width: 4.0, height: 26,
+    x: 26.0, y: 44, width: 3.5, height: 20,
   },
-
-  // ── NOTEBOOK (middle shelf) ───────────────────────────────────────────────
   {
     id: "notebook",
     type: "notebook",
     title: "Qaydlar",
     subtitle: "Fikrlar va g'oyalar",
     interaction: "open-notes",
-    x: 38.0, y: 40, width: 5.5, height: 26,
+    x: 40.0, y: 44, width: 5.0, height: 20,
   },
-
-  // ── BOTTOM SHELF ──────────────────────────────────────────────────────────
-
   {
     id: "book-influence",
     type: "book",
     title: "Influence",
     author: "Robert Cialdini",
     interaction: "open-book",
-    x: 2.5, y: 72, width: 3.8, height: 22,
+    x: 45.0, y: 44, width: 3.5, height: 20,
   },
+
+  // ══════════════════════════════════════════════
+  // BOTTOM SHELF  (y: 68 → 82)
+  // ══════════════════════════════════════════════
+  // From brightness analysis at y=75%:
+  // x=2-8: bright (wall/frame)
+  // x=14-22: book group
+  // x=40-51: bright book group
+
   {
     id: "book-4hww",
     type: "book",
     title: "The 4-Hour Workweek",
     author: "Tim Ferriss",
     interaction: "open-book",
-    x: 6.5, y: 72, width: 4.5, height: 22,
+    x: 2.0, y: 68, width: 5.0, height: 14,
   },
   {
     id: "book-goodgreat",
@@ -231,7 +245,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Good to Great",
     author: "Jim Collins",
     interaction: "open-book",
-    x: 11.2, y: 72, width: 4.2, height: 22,
+    x: 7.0, y: 68, width: 4.0, height: 14,
   },
   {
     id: "book-startwhy",
@@ -239,7 +253,7 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Start with Why",
     author: "Simon Sinek",
     interaction: "open-book",
-    x: 15.6, y: 72, width: 4.2, height: 22,
+    x: 11.0, y: 68, width: 4.0, height: 14,
   },
   {
     id: "book-almanack",
@@ -247,25 +261,62 @@ export const SHELF_ITEMS: ShelfItem[] = [
     title: "Almanack of Naval",
     author: "Naval Ravikant",
     interaction: "open-book",
-    x: 20.0, y: 72, width: 4.0, height: 22,
+    x: 15.0, y: 68, width: 4.0, height: 14,
+  },
+  {
+    id: "book-sprint",
+    type: "book",
+    title: "Sprint",
+    author: "Jake Knapp",
+    interaction: "open-book",
+    x: 40.0, y: 68, width: 4.0, height: 14,
+  },
+  {
+    id: "book-steal",
+    type: "book",
+    title: "Steal Like an Artist",
+    author: "Austin Kleon",
+    interaction: "open-book",
+    x: 44.0, y: 68, width: 4.5, height: 14,
+  },
+  {
+    id: "book-showwork",
+    type: "book",
+    title: "Show Your Work",
+    author: "Austin Kleon",
+    interaction: "open-book",
+    x: 48.5, y: 68, width: 4.0, height: 14,
   },
 
-  // ── CAMERA (bottom shelf or side) ─────────────────────────────────────────
+  // ══════════════════════════════════════════════
+  // RIGHT SIDE OBJECTS  (x: 55%+)
+  // ══════════════════════════════════════════════
+  // From right side analysis: objects at x=55-90%
+  // y=10-30%: some object (globe likely)
+  // y=50-65%: another object (camera?)
+  // y=68-82%: bottom right objects
+
+  {
+    id: "globe",
+    type: "globe",
+    title: "Dunyo",
+    subtitle: "Sayohat va madaniyatlar",
+    interaction: "open-map",
+    x: 57.0, y: 6, width: 10.0, height: 22,
+  },
   {
     id: "camera",
     type: "camera",
     title: "Kontent",
     subtitle: "Suratlar va videolar",
     interaction: "open-content",
-    x: 70.0, y: 65, width: 9.0, height: 20,
+    x: 57.0, y: 44, width: 10.0, height: 20,
   },
-
-  // ── PLANT ─────────────────────────────────────────────────────────────────
   {
     id: "plant",
     type: "plant",
-    title: "🌱",
+    title: "O'simlik",
     interaction: "easter-egg",
-    x: 82.0, y: 55, width: 7.0, height: 25,
+    x: 70.0, y: 44, width: 8.0, height: 20,
   },
 ];
