@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as NowRouteImport } from './routes/now'
+import { Route as RoomRouteImport } from './routes/room'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as WritingRouteImport } from './routes/writing'
 import { Route as WritingSlugRouteImport } from './routes/writing/$slug'
@@ -54,6 +55,11 @@ const NowRoute = NowRouteImport.update({
   path: '/now',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoomRoute = RoomRouteImport.update({
+  id: '/room',
+  path: '/room',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/now': typeof NowRoute
+  '/room': typeof RoomRoute
   '/projects': typeof ProjectsRoute
   '/writing': typeof WritingRoute
   '/writing/$slug': typeof WritingSlugRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/now': typeof NowRoute
+  '/room': typeof RoomRoute
   '/projects': typeof ProjectsRoute
   '/writing': typeof WritingRoute
   '/writing/$slug': typeof WritingSlugRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/now': typeof NowRoute
+  '/room': typeof RoomRoute
   '/projects': typeof ProjectsRoute
   '/writing': typeof WritingRoute
   '/writing/$slug': typeof WritingSlugRoute
@@ -101,11 +110,11 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
+  fullPaths: '/' | '/about' | '/contact' | '/now' | '/room' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
+  to: '/' | '/about' | '/contact' | '/now' | '/room' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
   id:
-    '__root__' | '/' | '/about' | '/contact' | '/now' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
+    '__root__' | '/' | '/about' | '/contact' | '/now' | '/room' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -113,6 +122,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   NowRoute: typeof NowRoute
+  RoomRoute: typeof RoomRoute
   ProjectsRoute: typeof ProjectsRoute
   WritingRoute: typeof WritingRoute
   WritingSlugRoute: typeof WritingSlugRoute
@@ -148,6 +158,13 @@ declare module '@tanstack/react-router' {
       path: '/now'
       fullPath: '/now'
       preLoaderRoute: typeof NowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/room': {
+      id: '/room'
+      path: '/room'
+      fullPath: '/room'
+      preLoaderRoute: typeof RoomRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
@@ -193,6 +210,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   NowRoute: NowRoute,
+  RoomRoute: RoomRoute,
   ProjectsRoute: ProjectsRoute,
   WritingRoute: WritingRoute,
   WritingSlugRoute: WritingSlugRoute,

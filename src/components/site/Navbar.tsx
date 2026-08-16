@@ -39,7 +39,13 @@ export function Navbar() {
         <div className="flex items-center gap-1">
           <SearchDialog />
           <ThemeToggle />
-          <ActionLink to="/contact" size="sm" className="ml-2 hidden sm:inline-flex">
+          <Link
+            to="/room"
+            className="ml-2 hidden sm:inline-flex items-center gap-1.5 rounded-full bg-foreground px-3 py-1.5 text-xs font-medium text-background transition-opacity hover:opacity-80"
+          >
+            New ✦
+          </Link>
+          <ActionLink to="/contact" size="sm" className="ml-1 hidden sm:inline-flex">
             Contact
           </ActionLink>
           <button
