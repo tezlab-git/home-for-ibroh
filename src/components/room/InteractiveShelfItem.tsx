@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import type { ShelfItem } from "./shelfTypes";
 import { getHoverTransform } from "./shelfTypes";
+import { vrAudio } from "./vrAudio";
 
 type State = "idle" | "hover" | "pressed";
 
@@ -14,13 +15,17 @@ export function InteractiveShelfItem({ item, onSelect, isSelected }: Props) {
   const [state, setState] = useState<State>("idle");
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  const enter = useCallback(() => setState("hover"), []);
+  const enter = useCallback(() => {
+    vrAudio.playHoverChirp();
+    setState("hover");
+  }, []);
   const leave = useCallback(() => setState(isSelected ? "hover" : "idle"), [isSelected]);
   const down = useCallback(() => setState("pressed"), []);
   const up = useCallback(() => setState("hover"), []);
 
   const handleClick = useCallback(() => {
     if (!btnRef.current) return;
+    vrAudio.playClickSound();
     onSelect(item, btnRef.current.getBoundingClientRect());
   }, [item, onSelect]);
 

@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
 
 export const Route = createFileRoute("/admin/login")({
   component: AdminLogin,
@@ -15,8 +15,14 @@ function AdminLogin() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError("");
+
+    if (!isSupabaseConfigured) {
+      setError("Supabase kalitlari .env da belgilanmagan. Iltimos, supabase/README.md boʻyicha sozlang.");
+      return;
+    }
+
+    setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setError(error.message);
@@ -31,6 +37,15 @@ function AdminLogin() {
       <div className="w-full max-w-sm">
         <h1 className="text-2xl font-medium text-foreground">Admin</h1>
         <p className="mt-1 text-sm text-muted-foreground">Kirish uchun ma'lumotlarni kiriting</p>
+
+        {!isSupabaseConfigured && (
+          <div className="mt-4 rounded-md border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-400">
+            <p className="font-semibold">⚠️ Supabase ulanmagan</p>
+            <p className="mt-1">
+              Admin panelga kirish uchun <code>.env</code> faylida Supabase kalitlarini kiriting. Yoʻriqnoma: <code>supabase/README.md</code>
+            </p>
+          </div>
+        )}
         <form onSubmit={handleLogin} className="mt-8 space-y-4">
           <div>
             <label className="text-sm font-medium text-foreground">Email</label>

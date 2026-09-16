@@ -13,28 +13,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as NowRouteImport } from './routes/now'
-import { Route as RoomRouteImport } from './routes/room'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as RoomRouteImport } from './routes/room'
 import { Route as WritingRouteImport } from './routes/writing'
-import { Route as WritingSlugRouteImport } from './routes/writing/$slug'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as SitemapXmlRouteImport } from './routes/sitemap.xml'
+import { Route as WritingSlugRouteImport } from './routes/writing/$slug'
 
-const WritingSlugRoute = WritingSlugRouteImport.update({
-  id: '/writing/$slug',
-  path: '/writing/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/admin/login',
-  path: '/admin/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,14 +41,14 @@ const NowRoute = NowRouteImport.update({
   path: '/now',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RoomRoute = RoomRouteImport.update({
-  id: '/room',
-  path: '/room',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoomRoute = RoomRouteImport.update({
+  id: '/room',
+  path: '/room',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WritingRoute = WritingRouteImport.update({
@@ -70,30 +56,52 @@ const WritingRoute = WritingRouteImport.update({
   path: '/writing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapXmlRoute = SitemapXmlRouteImport.update({
+  id: '/sitemap/xml',
+  path: '/sitemap/xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WritingSlugRoute = WritingSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => WritingRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/now': typeof NowRoute
-  '/room': typeof RoomRoute
   '/projects': typeof ProjectsRoute
-  '/writing': typeof WritingRoute
+  '/room': typeof RoomRoute
+  '/writing': typeof WritingRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/admin/': typeof AdminIndexRoute
-  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/now': typeof NowRoute
-  '/room': typeof RoomRoute
   '/projects': typeof ProjectsRoute
-  '/writing': typeof WritingRoute
-  '/writing/$slug': typeof WritingSlugRoute
-  '/admin/': typeof AdminIndexRoute
+  '/room': typeof RoomRoute
+  '/writing': typeof WritingRouteWithChildren
   '/admin/login': typeof AdminLoginRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
+  '/writing/$slug': typeof WritingSlugRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -101,20 +109,54 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/now': typeof NowRoute
-  '/room': typeof RoomRoute
   '/projects': typeof ProjectsRoute
-  '/writing': typeof WritingRoute
+  '/room': typeof RoomRoute
+  '/writing': typeof WritingRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
+  '/sitemap/xml': typeof SitemapXmlRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/admin/': typeof AdminIndexRoute
-  '/admin/login': typeof AdminLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/now' | '/room' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/now'
+    | '/projects'
+    | '/room'
+    | '/writing'
+    | '/admin/login'
+    | '/sitemap/xml'
+    | '/writing/$slug'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/now' | '/room' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/now'
+    | '/projects'
+    | '/room'
+    | '/writing'
+    | '/admin/login'
+    | '/sitemap/xml'
+    | '/writing/$slug'
+    | '/admin'
   id:
-    '__root__' | '/' | '/about' | '/contact' | '/now' | '/room' | '/projects' | '/writing' | '/writing/$slug' | '/admin/' | '/admin/login'
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/now'
+    | '/projects'
+    | '/room'
+    | '/writing'
+    | '/admin/login'
+    | '/sitemap/xml'
+    | '/writing/$slug'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -122,12 +164,12 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   NowRoute: typeof NowRoute
-  RoomRoute: typeof RoomRoute
   ProjectsRoute: typeof ProjectsRoute
-  WritingRoute: typeof WritingRoute
-  WritingSlugRoute: typeof WritingSlugRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+  RoomRoute: typeof RoomRoute
+  WritingRoute: typeof WritingRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
+  SitemapXmlRoute: typeof SitemapXmlRoute
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -160,18 +202,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NowRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/room': {
-      id: '/room'
-      path: '/room'
-      fullPath: '/room'
-      preLoaderRoute: typeof RoomRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/projects': {
       id: '/projects'
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/room': {
+      id: '/room'
+      path: '/room'
+      fullPath: '/room'
+      preLoaderRoute: typeof RoomRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/writing': {
@@ -181,16 +223,9 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WritingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/writing/$slug': {
-      id: '/writing/$slug'
-      path: '/writing/$slug'
-      fullPath: '/writing/$slug'
-      preLoaderRoute: typeof WritingSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/': {
       id: '/admin/'
-      path: '/admin/'
+      path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
@@ -202,20 +237,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap/xml': {
+      id: '/sitemap/xml'
+      path: '/sitemap/xml'
+      fullPath: '/sitemap/xml'
+      preLoaderRoute: typeof SitemapXmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/writing/$slug': {
+      id: '/writing/$slug'
+      path: '/$slug'
+      fullPath: '/writing/$slug'
+      preLoaderRoute: typeof WritingSlugRouteImport
+      parentRoute: typeof WritingRoute
+    }
   }
 }
+
+interface WritingRouteChildren {
+  WritingSlugRoute: typeof WritingSlugRoute
+}
+
+const WritingRouteChildren: WritingRouteChildren = {
+  WritingSlugRoute: WritingSlugRoute,
+}
+
+const WritingRouteWithChildren =
+  WritingRoute._addFileChildren(WritingRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   NowRoute: NowRoute,
-  RoomRoute: RoomRoute,
   ProjectsRoute: ProjectsRoute,
-  WritingRoute: WritingRoute,
-  WritingSlugRoute: WritingSlugRoute,
-  AdminIndexRoute: AdminIndexRoute,
+  RoomRoute: RoomRoute,
+  WritingRoute: WritingRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
+  SitemapXmlRoute: SitemapXmlRoute,
+  AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

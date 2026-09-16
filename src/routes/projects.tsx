@@ -4,6 +4,8 @@ import { ProjectCard } from "@/components/site/ProjectCard";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
+import { projects as staticProjects } from "@/content/projects";
+
 const title = "Loyihalar — ibroh.im";
 const description =
   "Ibrohimbekning mahsulotlari, tajribalari va konsepsiyalari — Tezlab, Mano, SalomAT va Mayoq Labs.";
@@ -22,18 +24,22 @@ export const Route = createFileRoute("/projects")({
   component: ProjectsPage,
 });
 
-type Project = {
-  slug: string;
-  name: string;
-  description?: string;
-  category?: string;
-  status?: string;
-  year?: string;
-  href?: string;
-};
+import type { Project } from "@/content/projects";
+
+function mapDbProject(row: any): Project {
+  return {
+    slug: row.slug,
+    name: row.name,
+    description: row.description || "",
+    category: row.category || "Loyiha",
+    status: row.status || "Faol",
+    year: row.year || "2026",
+    href: row.href || `/projects/${row.slug}`,
+  };
+}
 
 function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(staticProjects);
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -44,7 +50,7 @@ function ProjectsPage() {
           .eq("published", true)
           .order("created_at", { ascending: false });
         if (error) throw error;
-        if (mounted) setProjects((data as any) || []);
+        if (mounted && data && data.length > 0) setProjects(data.map(mapDbProject));
       } catch (e) {
         console.error("Failed to load projects", e);
       }

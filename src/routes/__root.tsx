@@ -12,6 +12,8 @@ import { type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Navbar } from "../components/site/Navbar";
 import { Footer } from "../components/site/Footer";
+import { InteractiveBackground } from "../components/site/InteractiveBackground";
+import { CustomCodeCursor } from "../components/site/CustomCodeCursor";
 
 
 function NotFoundComponent() {
@@ -117,6 +119,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap",
       },
     ],
+    scripts: [
+      {
+        children: `try{const s=localStorage.getItem('ibrohim-theme');if(s==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){}`,
+      },
+    ],
   }),
 
   shellComponent: RootShell,
@@ -127,7 +134,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
       </head>
@@ -144,7 +151,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      <InteractiveBackground />
+      <CustomCodeCursor />
+      <div className="relative z-10 flex min-h-screen flex-col">
         <Navbar />
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
@@ -155,4 +164,5 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
+
 
